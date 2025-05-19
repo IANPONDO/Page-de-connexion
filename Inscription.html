@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="connexion.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+    <div class="wrapper">
+        <form id="signupForm">
+            <h1>Inscription</h1>
+            <div class="input-box">
+                <input type="text" id="Nom utilisateur" placeholder="Nom utilisateur" required>
+                
+            </div>
+            <div class="input-box">
+                <input type="email" id="email" placeholder="Email" required>
+                
+            </div>
+            <div class="input-box">
+                <input type="password" id="Mot de passe" placeholder="Mot de passe" required>
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+            <p id="errorMessage" style="color: rgb(60, 255, 0); font-size: 14px;"></p>
+            <button type="submit" class="btn">S'inscrire</button>
+
+            <div class="register-link">
+                <p>Vous avez déjà un compte ? <a href="connexion.html">connexion</a></p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("signupForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+    
+            let username = document.getElementById("Nom utilisateur").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("Mot de passe ").value.trim();
+            let errorMessage = document.getElementById("errorMessage");
+    
+            let usernameRegex = /^[a-zA-Z][a-zA-Z0-9_-]*$/;
+            if (!usernameRegex.test(username)) {
+                errorMessage.textContent = "Le nom d'utilisateur doit commencé par une lettre et ne doit pas contenir de numéro, ni de caractère spéciaux.";
+                return;
+            }
+    
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+            
+            let usernameExists = users.some(user => user.username === username);
+            let emailExists = users.some(user => user.email === email);
+    
+            if (usernameExists) {
+                errorMessage.textContent = "Ce nom est déjà pris.";
+                return;
+            }
+    
+            if (emailExists) {
+                errorMessage.textContent = "Cet email existe déjà .";
+                return;
+            }
+    
+            users.push({ username, email, password });
+            localStorage.setItem("users", JSON.stringify(users));
+    
+            alert("Inscription reussie");
+            window.location.href = "NEXUS.html";  //permet de revenir à la page d'accueil
+        });
+    </script>
+
+</body>
+</html>
