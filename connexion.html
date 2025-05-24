@@ -6,12 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="connexion.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
         #loginErrorMessage {
             color: red;
             font-size: 14px;
-            margin: 10px 0 15px 0; /* haut, droite, bas, gauche */
+            margin-top: 10px;
+            text-align: center;
+        }
+        #loginSuccessMessage {
+            color: rgb(60, 255, 0);
+            font-size: 14px;
+            margin-bottom: 20px;
+            text-align: center;
         }
     </style>
 </head>
@@ -20,17 +26,16 @@
     <div class="wrapper">
         <form id="loginForm" onsubmit="return false;"> 
             <h1>Se connecter</h1>
-
             <div class="input-box">
                 <input type="text" id="loginUsername" placeholder="Nom utilisateur" required>
             </div>
-
             <div class="input-box">
                 <input type="password" id="loginPassword" placeholder="Mot de passe" required>
                 <i class='bx bxs-lock-alt'></i>
             </div>
 
             <p id="loginErrorMessage"></p>
+            <p id="loginSuccessMessage"></p>
 
             <div class="remember-forgot">
                 <label><input type="checkbox"> Se souvenir de moi</label>
@@ -52,17 +57,25 @@
             let username = document.getElementById("loginUsername").value.trim();
             let password = document.getElementById("loginPassword").value.trim();
             let errorMessage = document.getElementById("loginErrorMessage");
+            let successMessage = document.getElementById("loginSuccessMessage");
+
+            errorMessage.textContent = "";
+            errorMessage.style.marginBottom = "";
+            successMessage.textContent = "";
 
             let users = JSON.parse(localStorage.getItem("users")) || [];
             let user = users.find(user => user.username === username && user.password === password);
 
             if (!user) {
                 errorMessage.textContent = "Nom ou mot de passe invalide.";
+                errorMessage.style.marginBottom = "20px";
                 return;
             }
 
-            alert("Connexion réussie!");
-            window.location.href = "NEXUS.html";
+            successMessage.textContent = "Connexion réussie !";
+            setTimeout(function() {
+                window.location.href = "NEXUS.html"; 
+            }, 1000); 
         });
     </script>
 
