@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mot de passe oublié</title>
+    <link rel="stylesheet" href="connexion.css">
+    <style>
+        .message-center {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <form id="forgotForm">
+            <h1>Mot de passe oublié</h1>
+            <div class="input-box">
+                <input type="email" id="forgotEmail" placeholder="Entrez votre email" required>
+            </div>
+            <p id="forgotMessage" class="message-center"></p>
+            <button type="submit" class="btn">Réinitialiser</button>
+            <div class="register-link">
+                <p>Retour à la <a href="connexion.html">connexion</a></p>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.getElementById("forgotForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let email = document.getElementById("forgotEmail").value.trim();
+            let message = document.getElementById("forgotMessage");
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+            let user = users.find(user => user.email === email);
+
+            if (!user) {
+                message.style.color = "red";
+                message.textContent = "Aucun compte trouvé avec cet email.";
+                return;
+            }
+
+            message.style.color = "rgb(60, 255, 0)";
+            message.textContent = "Un lien de réinitialisation a été envoyé à votre email (simulation).";
+        });
+    </script>
+</body>
+</html>
