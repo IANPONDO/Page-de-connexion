@@ -22,7 +22,7 @@
                 <input type="email" id="forgotEmail" placeholder="Entrez votre email" required>
             </div>
             <p id="forgotMessage" class="message-center"></p>
-            <button type="submit" class="btn">Réinitialiser</button>
+            <button type="submit" class="btn" id="sendBtn">Envoyer</button>
             <div class="register-link">
                 <p>Retour à la <a href="connexion.html">connexion</a></p>
             </div>
@@ -33,6 +33,7 @@
             event.preventDefault();
             let email = document.getElementById("forgotEmail").value.trim();
             let message = document.getElementById("forgotMessage");
+            let sendBtn = document.getElementById("sendBtn");
             let users = JSON.parse(localStorage.getItem("users")) || [];
             let user = users.find(user => user.email === email);
 
@@ -43,7 +44,8 @@
             }
 
             message.style.color = "rgb(60, 255, 0)";
-            message.textContent = "Un lien de réinitialisation a été envoyé à votre email (simulation).";
+            message.textContent = "Un lien de réinitialisation a été envoyé à votre email . Veuillez cliquer sur le lien reçu pour créer un nouveau mot de passe.";
+            sendBtn.style.display = "none";
         });
     </script>
 </body>
